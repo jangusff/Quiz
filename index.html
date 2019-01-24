@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Classic Arcade Game Quiz (Wireframe prototype)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <header>
+
+        <h2 role="banner">Test your knowledge of the Golden Age of Video Games!</h2>
+        <img id="intro-image" src="https://picsum.photos/75?image=837" alt="dog" />
+             
+    </header>
+
+    <main role="main">
+
+      <div id="quiz-start" class="quiz-phase toggle__active">
+        <button id="btn-quiz-start" type="submit">Begin Quiz</button>
+      </div>
+
+      <div id="quiz-in-progress" class="quiz-phase">
+
+        <div id="quiz-progress-container">
+          <p></p>
+        </div>
+
+        <div id="question-container">
+          <div class="question-text">
+            <p></p>
+          </div>
+
+          <form class="get-user-answer" action="#">
+            <input type="radio" id="mult-choice-1" name="poss-answers" value="mult-choice-1">
+            <label for="mult-choice-1">Possible answer #1</label>
+            <br>
+            <input type="radio" id="mult-choice-2" name="poss-answers" value="mult-choice-2">
+            <label for="mult-choice-2">Possible answer #2</label>
+            <br>
+            <input type="radio" id="mult-choice-3" name="poss-answers" value="mult-choice-3">
+            <label for="mult-choice-3">Possible answer #3</label>
+            <br>
+            <input type="radio" id="mult-choice-4" name="poss-answers" value="mult-choice-4">
+            <label for="mult-choice-4">Possible answer #4</label>
+            <br>
+            <button id="btn-submit-answer" type="submit">Submit Answer</button>
+            
+          </form>
+
+          <div id="answer-feedback">
+            <p>This space reserved for feedback following the user clicking on the 'Submit Answer' button.</p>
+          </div>
+        </div>
+
+        <div id="score-container">
+          <p>Current Score:<span id="current-score"></span></p>
+        </div>
+
+      
+      </div>
+
+      <div id="quiz-complete" class="quiz-phase">
+        <p>Quiz Complete!</p>
+        <p>*** other closing comments here ***</p>
+        <button id="btn-quiz-restart" type="submit">Restart Quiz</button>
+      </div>
+        
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+    <script type="text/javascript" src="script.js"></script>
+  </body>
+</html>
