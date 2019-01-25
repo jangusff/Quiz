@@ -11,9 +11,16 @@ header {
   justify-content: space-around;
 }
 
+.intro-image-container {
+  height: 540px;
+  width: 300px; 
+  padding-right: 15px;
+}
+
 #intro-image {
-  min-height: 250px;
-  max-width: 25%;
+  object-fit: contain;
+  /* width: auto;
+  height: auto; */
 }
 
 #btn-quiz-start {
@@ -25,6 +32,12 @@ header {
 #btn-submit-answer {
   margin-top: 15px;
   margin-left: 15px;
+}
+
+legend {
+    background-color: #000;
+    color: #fff;
+    padding: 3px 6px;
 }
 
 .get-user-answer input[type="radio"],
