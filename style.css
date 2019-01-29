@@ -6,14 +6,40 @@ body {
   padding: 25px;
 }
 
-header {
+.quiz-start {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin-top: 15px;
+  width: 60%;
+}
+
+.col-1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-quiz-start {
+  /* text-align: center; */
+  margin: auto;
+}
+
+button {
+    padding: 20px;
+    border: none;
+    background-color: #38A9AF;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 2;
+    cursor: pointer;
 }
 
 .intro-image-container {
+  /*
   height: 540px;
   width: 300px; 
+  */
+  height: 270px;
+  width: 150px; 
   padding-right: 15px;
 }
 
@@ -23,11 +49,6 @@ header {
   height: auto; */
 }
 
-#btn-quiz-start {
-  position: absolute;
-  top: 100px;
-  left: 20%;
-}
 
 #btn-submit-answer {
   margin-top: 15px;

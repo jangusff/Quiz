@@ -8,22 +8,26 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
-  <body>
-    <header>
 
-        <h2 role="banner">Test your knowledge of the Golden Age of Video Games!</h2>
-        <div class="intro-image-container">
-          <img id="intro-image" src="images/Pong.jpg" alt="Pong" />
-        </div>
-             
+  <body>
+
+    <header>
     </header>
 
     <main role="main">
 
-      <div id="quiz-start" class="quiz-phase toggle__active">
-        <button id="btn-quiz-start" type="submit">Begin Quiz</button>
+      <div class="quiz-start" class="quiz-phase toggle__active">
+        <div class="col-1">
+          <h2 role="banner">Test your knowledge of the Golden Age of Video Games!</h2>
+          <button class="btn-quiz-start" type="submit">Begin Quiz</button>
+        </div>
+        
+        <div class="intro-image-container">
+          <img id="intro-image" src="images/Pong.jpg" alt="Pong" />
+        </div>
+             
       </div>
-
+     
       <div id="quiz-in-progress" class="quiz-phase">
 
         <div id="quiz-progress-container">
