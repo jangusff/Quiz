@@ -6,21 +6,32 @@ body {
   padding: 25px;
 }
 
-.quiz-start {
+main {
   display: flex;
   justify-content: center;
   margin-top: 15px;
   border: 5px solid red;
+}
 
+.quiz-phase {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toggle__active {
+  display: block;
 }
 
 .col-1 {
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
   max-width: 450px;
   border: 3px solid green;
-  text-align: center;
+}
+
+.quiz-progress-indicator {
+  border: 2px solid gold;
 }
 
 .btn-begin-quiz {
@@ -39,19 +50,27 @@ button {
     cursor: pointer;
 }
 
-.intro-image-container {
-  padding: 15px;
-  border: 5px solid blue;
+.col-2 {
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+  border: 3px solid magenta;
+  text-align: center;
 }
 
-#intro-image {
+.quiz-current-score {
+  border: 2px solid black;
+}
+
+.current-image {
+  padding: 15px;
   height: 405px;
   width: 225px; 
   object-fit: contain;
   border: 3px solid pink;
 }
 
-#btn-submit-answer {
+.btn-submit-answer {
   margin-top: 15px;
   margin-left: 15px;
 }
@@ -69,18 +88,9 @@ legend {
   margin-top: .35rem;
 }
 
-#answer-feedback {
+.answer-feedback {
   margin-top: 15px;
   border: 2px solid black;
   width: 40%;
 }
 
-.quiz-phase {
-  display: none;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.toggle__active {
-  display: block;
-}

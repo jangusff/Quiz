@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Classic Arcade Game Quiz (Wireframe prototype)</title>
+    <title>Classic Arcade Game Quiz</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -16,65 +16,64 @@
 
     <main role="main">
 
-      <div class="quiz-start" class="quiz-phase toggle__active">
-        <div class="col-1">
-          <h2 role="banner">Test your knowledge of the Golden Age of Video Games!</h2>
-          <button class="btn-begin-quiz" type="submit">Begin Quiz</button>
-        </div>
-        
-        <div class="intro-image-container">
-          <img id="intro-image" src="images/Pong.jpg" alt="Pong" />
-        </div>
-             
-      </div>
-     
-      <div id="quiz-in-progress" class="quiz-phase">
+      <div class="col-1">
+          
+        <p class="quiz-progress-indicator">Question 1 of 10</p>
 
-        <div id="quiz-progress-container">
-          <p></p>
-        </div>
+        <div class="quiz-dialog">
 
-        <div id="question-container" class="question-text">
+          <div id="quiz-start" class="quiz-phase toggle__active"
+            <h2 role="banner">Test your knowledge of the Golden Age of Video Games!</h2>
+          
+            <button class="btn-begin-quiz" type="submit">Begin Quiz</button>
+          </div>
 
-          <form class="get-user-answer" action="#">
-            <fieldset>
-              <legend>This is a Question from the Quiz.</legend>
+          <div id="quiz-in-progress" class="quiz-phase">
 
-            <input type="radio" id="mult-choice-1" name="poss-answers" value="mult-choice-1">
-            <label for="mult-choice-1">Possible answer #1</label>
-            <br>
-            <input type="radio" id="mult-choice-2" name="poss-answers" value="mult-choice-2">
-            <label for="mult-choice-2">Possible answer #2</label>
-            <br>
-            <input type="radio" id="mult-choice-3" name="poss-answers" value="mult-choice-3">
-            <label for="mult-choice-3">Possible answer #3</label>
-            <br>
-            <input type="radio" id="mult-choice-4" name="poss-answers" value="mult-choice-4">
-            <label for="mult-choice-4">Possible answer #4</label>
-            <br>
-            <button id="btn-submit-answer" type="submit">Submit Answer</button>
+            <form class="get-user-answer" action="#">
+              <fieldset>
+                <legend>This is a Question from the Quiz.</legend>
+
+              <input type="radio" id="mult-choice-1" name="poss-answers" value="mult-choice-1">
+              <label for="mult-choice-1">Possible answer #1</label>
+              <br>
+              <input type="radio" id="mult-choice-2" name="poss-answers" value="mult-choice-2">
+              <label for="mult-choice-2">Possible answer #2</label>
+              <br>
+              <input type="radio" id="mult-choice-3" name="poss-answers" value="mult-choice-3">
+              <label for="mult-choice-3">Possible answer #3</label>
+              <br>
+              <input type="radio" id="mult-choice-4" name="poss-answers" value="mult-choice-4">
+              <label for="mult-choice-4">Possible answer #4</label>
+              <br>
+              <button class="btn-submit-answer" type="submit">Submit Answer</button>
+              
+              </fieldset>
+
+            </form>
             
-            </fieldset>
+            <div class="answer-feedback">
+              <p>This space reserved for feedback following the user clicking on the 'Submit Answer' button.</p>
+            </div>
 
-          </form>
-
-          <div id="answer-feedback">
-            <p>This space reserved for feedback following the user clicking on the 'Submit Answer' button.</p>
           </div>
         </div>
 
-        <div id="score-container">
-          <p>Current Score:<span id="current-score"></span></p>
-        </div>
-
-      
       </div>
-
-      <div id="quiz-complete" class="quiz-phase">
+        
+      <div class="col-2">
+        <p class="quiz-current-score">Your score: 3</p>
+        <img class="current-image" src="" alt="" />
+      </div>
+             
+      <!--
+      <div class="quiz-complete quiz-phase">
         <p>Quiz Complete!</p>
         <p>*** other closing comments here ***</p>
-        <button id="btn-quiz-restart" type="submit">Restart Quiz</button>
+        <button class="btn-quiz-restart" type="submit">Restart Quiz</button>
       </div>
+      -->
+
         
     </main>
 

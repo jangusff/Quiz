@@ -124,11 +124,11 @@ function setActiveQuizPhase(targetPhase) {
 }
 
 function handleBeginQuiz() {
-  $('#quiz-start').on('click', `#btn-quiz-start`, event => {
+  $('#quiz-start').on('click', `.btn-begin-quiz`, event => {
     console.log('`handleBeginQuiz` ran');
     resetQuizCounters();
+    $(".current-image").attr("src","");
     setActiveQuizPhase($('#quiz-in-progress'));
-    
   });
 }
 
@@ -146,12 +146,19 @@ function handleRestartQuiz() {
 // initially rendering the shopping list, and activating our individual functions
 // that handle new item submission and user clicks on the "check" and "delete" buttons
 // for individual shopping list items.
+function quizInit() {
+   $(".current-image").attr("src","images/Pong.jpg");
+}
+
 function launchQuiz() {
 
   
   console.log('Started.');
+  quizInit();
   handleBeginQuiz();
+  /*
   handleRestartQuiz();
+  */
 
 /*
   renderShoppingList();
