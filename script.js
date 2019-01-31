@@ -132,6 +132,14 @@ function handleBeginQuiz() {
   });
 }
 
+
+function handleSubmitAnswer() {
+
+
+
+
+}
+
 function handleRestartQuiz() {
   $('#quiz-complete').on('click', `#btn-quiz-restart`, event => {
     console.log('`handleRestartQuiz` ran');
@@ -156,6 +164,10 @@ function launchQuiz() {
   console.log('Started.');
   quizInit();
   handleBeginQuiz();
+  $("legend").text(ITEMBANK[0].question);
+  handleSubmitAnswer();
+
+
   /*
   handleRestartQuiz();
   */

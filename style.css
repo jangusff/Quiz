@@ -79,6 +79,7 @@ legend {
     background-color: #000;
     color: #fff;
     padding: 3px 6px;
+    border-radius: 4px;
 }
 
 .get-user-answer input[type="radio"],
