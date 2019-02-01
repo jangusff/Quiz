@@ -4,6 +4,12 @@ var totalQuestions = 0;
 var currentQuestion = 0;
 var currentScore = 0;
 
+var possAnswerTemplate = '<input type="radio" id="mult-choice-@@num@@" name="poss-answers" value="mult-choice-@@num@@">\
+                <label for="mult-choice-@@num@@">@@qtext@@</label>\
+                <br>';
+
+
+
 const STORE = [
   {name: "apples", checked: false},
   {name: "oranges", checked: false},
@@ -150,6 +156,20 @@ function handleRestartQuiz() {
   });
 }
 
+
+
+function renderQuestion(questionNum) {
+    let regexNum2Replace = /@@num@@/gi;
+    let possAnswersHtml = "";
+    let questionText = "<legend>" + ITEMBANK[questionNum].question + "</legend>";
+    ITEMBANK[questionNum].answers.forEach(function(possAnswer, index) {
+        possAnswersHtml += possAnswerTemplate.replace(regexNum2Replace, index).replace("@@qtext@@", possAnswer);
+    });
+
+    // post questionText + possAnswersHtml as HTML within <fieldset>
+}
+
+
 // this function will be our callback when the page loads. it's responsible for
 // initially rendering the shopping list, and activating our individual functions
 // that handle new item submission and user clicks on the "check" and "delete" buttons
@@ -164,9 +184,12 @@ function launchQuiz() {
   console.log('Started.');
   quizInit();
   handleBeginQuiz();
-  $("legend").text(ITEMBANK[0].question);
   handleSubmitAnswer();
 
+
+
+  $("legend").text(ITEMBANK[0].question);
+  
 
   /*
   handleRestartQuiz();
