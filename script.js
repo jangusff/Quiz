@@ -1,150 +1,121 @@
 'use strict';
 
-var totalQuestions = 0;
-var currentQuestion = 0;
-var currentScore = 0;
+let totalQuestions = 0;
+let currentQuestion = 0;
+let currentScore = 0;
 
-var possAnswerTemplate = '<input type="radio" id="mult-choice-@@num@@" name="poss-answers" value="mult-choice-@@num@@">\
-                <label for="mult-choice-@@num@@">@@qtext@@</label>\
-                <br>';
+const possAnswerTemplate = `<input type="radio" id="mult-choice-@@num@@" name="poss-answers" value="@@qval@@" required>\
+                <label for="mult-choice-@@num@@">@@qval@@</label>\
+                <br>`;
+const btnSubmitAnswerHtml = `<button class="btn-submit-answer" type="submit">Submit Answer</button>`;
 
-
-
-const STORE = [
-  {name: "apples", checked: false},
-  {name: "oranges", checked: false},
-  {name: "milk", checked: true},
-  {name: "bread", checked: false}
+const positiveFeedback = [
+  "Yes!  You got it right!!",
+  "Well done!  That IS the correct answer!",
+  "Way to go!   You're RIGHT!",
 ];
 
-
-function generateItemElement(item, itemIndex, template) {
-  return `
-    <li class="js-item-index-element" data-item-index="${itemIndex}">
-      <span class="shopping-item js-shopping-item ${item.checked ? "shopping-item__checked" : ''}">${item.name}</span>
-      <div class="shopping-item-controls">
-        <button class="shopping-item-toggle js-item-toggle">
-            <span class="button-label">check</span>
-        </button>
-        <button class="shopping-item-delete js-item-delete">
-            <span class="button-label">delete</span>
-        </button>
-      </div>
-    </li>`;
-}
-
-
-function generateShoppingItemsString(shoppingList) {
-  console.log("Generating shopping list element");
-
-  const items = shoppingList.map((item, index) => generateItemElement(item, index));
-  
-  return items.join("");
-}
-
-
-function renderShoppingList() {
-  // render the shopping list in the DOM
-  console.log('`renderShoppingList` ran');
-  const shoppingListItemsString = generateShoppingItemsString(STORE);
-
-  // insert that HTML into the DOM
-  $('.js-shopping-list').html(shoppingListItemsString);
-}
-
-
-function addItemToShoppingList(itemName) {
-  console.log(`Adding "${itemName}" to shopping list`);
-  STORE.push({name: itemName, checked: false});
-}
-
-
-function handleNewItemSubmit() {
-  $('#js-shopping-list-form').submit(function(event) {
-    event.preventDefault();
-    console.log('`handleNewItemSubmit` ran');
-    const newItemName = $('.js-shopping-list-entry').val();
-    if (newItemName !== "") {
-      $('.js-shopping-list-entry').val('');
-      addItemToShoppingList(newItemName);
-      renderShoppingList();
-    }
-  });
-}
-
-
-function toggleCheckedForListItem(itemIndex) {
-  console.log("Toggling checked property for item at index " + itemIndex);
-  STORE[itemIndex].checked = !STORE[itemIndex].checked;
-}
-
-
-function deleteListItem(itemIndex) {
-  console.log("Deleting the item at index " + itemIndex);
-  STORE.splice(itemIndex, 1);
-}
-
-
-function getItemIndexFromElement(item) {
-  const itemIndexString = $(item)
-    .closest('.js-item-index-element')
-    .attr('data-item-index');
-  return parseInt(itemIndexString, 10);
-}
-
-
-function handleItemCheckClicked() {
-  $('.js-shopping-list').on('click', `.js-item-toggle`, event => {
-    console.log('`handleItemCheckClicked` ran');
-    const itemIndex = getItemIndexFromElement(event.currentTarget);
-    toggleCheckedForListItem(itemIndex);
-    renderShoppingList();
-  });
-}
-
-
-function handleDeleteItemClicked() {
-   $('.js-shopping-list').on('click', `.js-item-delete`, event => {
-      console.log('`handleDeleteItemClicked` ran');
-      const itemIndex = getItemIndexFromElement(event.currentTarget);
-      deleteListItem(itemIndex);
-      renderShoppingList();
-    });
-}
-
-
-
-
-
+const negativeFeedback = [
+  "Sorry. That is not the correct answer.",
+  "Nope.  Sorry.",
+  "No. Unfortunately, your answer was INCORRECT.",
+];
 
 function resetQuizCounters() {
-  totalQuestions = 0;
+  totalQuestions = ITEMBANK.length;
   currentQuestion = 0;
   currentScore = 0;
 }
 
+
+function updateProgress() {
+  let qNumForDisplay = currentQuestion + 1;
+  $('.quiz-progress-indicator').text(`Question ${qNumForDisplay.toString()} of ${totalQuestions.toString()}`);
+  $('.quiz-current-score').text(`Your score: ${currentScore.toString()}`);
+}
 
 function setActiveQuizPhase(targetPhase) {
   $('.quiz-phase').removeClass("toggle__active");
   targetPhase.addClass("toggle__active");
 }
 
-function handleBeginQuiz() {
+function btnHndlr_BeginQuiz() {
   $('#quiz-start').on('click', `.btn-begin-quiz`, event => {
-    console.log('`handleBeginQuiz` ran');
     resetQuizCounters();
     $(".current-image").attr("src","");
+    updateProgress();
+    $("fieldset").html(renderQuestion(currentQuestion));
     setActiveQuizPhase($('#quiz-in-progress'));
   });
 }
 
+function provideFeedback(fbakType, corrAns) {
+  let feedbackText = "";
+  let rnd = function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  };
 
-function handleSubmitAnswer() {
+  $('.answer-feedback').addClass(fbakType);
 
-
-
-
+  if (fbakType === "correct") {
+    feedbackText = positiveFeedback[rnd(positiveFeedback.length)];
+    $('.answer-feedback').text(feedbackText);
+    console.log(feedbackText);
+  } else {
+    feedbackText = negativeFeedback[rnd(negativeFeedback.length)];
+    $('.answer-feedback').html(`${feedbackText} <br><br>The correct answer was "${corrAns}".`);
+    console.log(feedbackText);
+  }
 }
+
+
+function btnHndlr_SubmitAnswer() {
+  $('form').on('submit', function (event) {
+      event.preventDefault();
+      let selected = $('input[name="poss-answers"]:checked');
+      let answer = $(selected).val();
+      let correctAnswer = `${ITEMBANK[currentQuestion].correctAnswer}`;
+      console.log(`Selected: ${selected}. Answer: ${answer}. CorrAnswer: ${correctAnswer}.`);
+
+      $(".current-image").attr({
+        src: ITEMBANK[currentQuestion].displayImg,
+        alt: ITEMBANK[currentQuestion].alt
+      });
+
+/**************
+      document.getElementById("myBtn").disabled = true;
+ */
+
+      if (answer === correctAnswer) {
+        currentScore++;
+        provideFeedback("correct");
+      } else {
+        provideFeedback("incorrect", correctAnswer);
+      }
+
+      if (currentQuestion + 1 === totalQuestions) {
+        setActiveQuizPhase($('#quiz-complete'));
+      } else {
+        $('.advance-to-next').addClass("toggle__active");
+      }
+      
+
+    });
+}
+
+function btnHndlr_Next() {
+  $('#quiz-in-progress').on('click', `.btn-next`, event => {
+    updateProgress();
+    currentQuestion++;
+
+    console.log(`Next btn. Score now: ${currentScore}. QNum now: ${currentQuestion}.`);
+
+    $('.advance-to-next').removeClass("toggle__active");
+    $(".current-image").attr("src","");
+    $("fieldset").html(renderQuestion(currentQuestion));
+  });
+}
+
 
 function handleRestartQuiz() {
   $('#quiz-complete').on('click', `#btn-quiz-restart`, event => {
@@ -160,47 +131,48 @@ function handleRestartQuiz() {
 
 function renderQuestion(questionNum) {
     let regexNum2Replace = /@@num@@/gi;
+    let regexqVal2Replace = /@@qval@@/gi;
+
     let possAnswersHtml = "";
     let questionText = "<legend>" + ITEMBANK[questionNum].question + "</legend>";
+    
     ITEMBANK[questionNum].answers.forEach(function(possAnswer, index) {
-        possAnswersHtml += possAnswerTemplate.replace(regexNum2Replace, index).replace("@@qtext@@", possAnswer);
+        possAnswersHtml += possAnswerTemplate.replace(regexNum2Replace, index).replace(regexqVal2Replace, possAnswer);
     });
 
-    // post questionText + possAnswersHtml as HTML within <fieldset>
+    return questionText + possAnswersHtml + btnSubmitAnswerHtml;
 }
 
+/*
+function presentQuiz() {
+  for (currentQuestion = 0; i < ITEMBANK.length; i++ ) {
+    let questionFieldSet = renderQuestion(currentQuestion);
+    $("fieldset").html(questionFieldSet);
+  }
+}
+*/
 
-// this function will be our callback when the page loads. it's responsible for
-// initially rendering the shopping list, and activating our individual functions
-// that handle new item submission and user clicks on the "check" and "delete" buttons
-// for individual shopping list items.
-function quizInit() {
-   $(".current-image").attr("src","images/Pong.jpg");
+function quizIntro() {
+  $(".current-image").attr({
+    src: "images/Pong.jpg",
+    alt: "pong video game image"
+  });
+  $('.quiz-progress-indicator').text("");
+  $('.quiz-current-score').text("");
+   setActiveQuizPhase($('#quiz-start'));
 }
 
 function launchQuiz() {
-
   
   console.log('Started.');
-  quizInit();
-  handleBeginQuiz();
-  handleSubmitAnswer();
-
-
-
-  $("legend").text(ITEMBANK[0].question);
-  
-
+  quizIntro();
+  btnHndlr_BeginQuiz();
+  btnHndlr_SubmitAnswer();
+ 
   /*
   handleRestartQuiz();
   */
 
-/*
-  renderShoppingList();
-  handleNewItemSubmit();
-  handleItemCheckClicked();
-  handleDeleteItemClicked();
-  */
 }
 
 // when the page loads, call `handleShoppingList`
