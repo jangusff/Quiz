@@ -41,8 +41,12 @@ function setActiveQuizPhase(targetPhase) {
 
 function btnHndlr_BeginQuiz() {
   $('#quiz-start').on('click', `.btn-begin-quiz`, event => {
+    event.preventDefault();
     resetQuizCounters();
-    $(".current-image").attr("src","");
+    $(".current-image").attr({
+        src: "",
+        alt: "",
+    });
     updateProgress();
     $("fieldset").html(renderQuestion(currentQuestion));
     setActiveQuizPhase($('#quiz-in-progress'));
@@ -96,6 +100,7 @@ function btnHndlr_SubmitAnswer() {
       if (currentQuestion + 1 === totalQuestions) {
         setActiveQuizPhase($('#quiz-complete'));
       } else {
+        $('.btn-submit-answer').prop("disabled", true);
         $('.advance-to-next').addClass("toggle__active");
       }
       
@@ -105,14 +110,20 @@ function btnHndlr_SubmitAnswer() {
 
 function btnHndlr_Next() {
   $('#quiz-in-progress').on('click', `.btn-next`, event => {
-    updateProgress();
+    console.log(`Next btn clicked.`);
+    event.preventDefault();
     currentQuestion++;
-
+    updateProgress();
+    
     console.log(`Next btn. Score now: ${currentScore}. QNum now: ${currentQuestion}.`);
 
     $('.advance-to-next').removeClass("toggle__active");
-    $(".current-image").attr("src","");
+    $(".current-image").attr({
+        src: "",
+        alt: "",
+    });
     $("fieldset").html(renderQuestion(currentQuestion));
+    $('.btn-submit-answer').prop("disabled", false);
   });
 }
 
@@ -143,15 +154,6 @@ function renderQuestion(questionNum) {
     return questionText + possAnswersHtml + btnSubmitAnswerHtml;
 }
 
-/*
-function presentQuiz() {
-  for (currentQuestion = 0; i < ITEMBANK.length; i++ ) {
-    let questionFieldSet = renderQuestion(currentQuestion);
-    $("fieldset").html(questionFieldSet);
-  }
-}
-*/
-
 function quizIntro() {
   $(".current-image").attr({
     src: "images/Pong.jpg",
@@ -168,6 +170,7 @@ function launchQuiz() {
   quizIntro();
   btnHndlr_BeginQuiz();
   btnHndlr_SubmitAnswer();
+  btnHndlr_Next();
  
   /*
   handleRestartQuiz();
