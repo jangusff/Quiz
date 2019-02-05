@@ -70,8 +70,7 @@ button {
 }
 
 .btn-submit-answer {
-  margin-top: 15px;
-  margin-left: 15px;
+   display: none;
 }
 
 legend {
@@ -92,14 +91,14 @@ legend {
   margin-top: 15px;
   border: 2px solid black;
   width: 60%; 
-}
+  }
 
-.answer-feedback correct {
-  background-color: green;
-}
-
-.answer-feedback incorrect {
+.answer-feedback.incorrect {
   background-color: red;
+}
+
+.answer-feedback.correct {
+  background-color: green;
 }
 
 .toggle__active {

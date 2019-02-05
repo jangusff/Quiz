@@ -27,7 +27,6 @@ function resetQuizCounters() {
   currentScore = 0;
 }
 
-
 function updateProgress() {
   let qNumForDisplay = currentQuestion + 1;
   $('.quiz-progress-indicator').text(`Question ${qNumForDisplay.toString()} of ${totalQuestions.toString()}`);
@@ -39,106 +38,15 @@ function setActiveQuizPhase(targetPhase) {
   targetPhase.addClass("toggle__active");
 }
 
-function btnHndlr_BeginQuiz() {
-  $('#quiz-start').on('click', `.btn-begin-quiz`, event => {
-    event.preventDefault();
-    resetQuizCounters();
-    $(".current-image").attr({
-        src: "",
-        alt: "",
-    });
-    updateProgress();
-    $("fieldset").html(renderQuestion(currentQuestion));
-    setActiveQuizPhase($('#quiz-in-progress'));
+function quizIntro() {
+  $(".current-image").attr({
+    src: "images/Pong.jpg",
+    alt: "pong video game image"
   });
+  $('.quiz-progress-indicator').text("");
+  $('.quiz-current-score').text("");
+   setActiveQuizPhase($('#quiz-start'));
 }
-
-function provideFeedback(fbakType, corrAns) {
-  let feedbackText = "";
-  let rnd = function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-  };
-
-  $('.answer-feedback').addClass(fbakType);
-
-  if (fbakType === "correct") {
-    feedbackText = positiveFeedback[rnd(positiveFeedback.length)];
-    $('.answer-feedback').text(feedbackText);
-    console.log(feedbackText);
-  } else {
-    feedbackText = negativeFeedback[rnd(negativeFeedback.length)];
-    $('.answer-feedback').html(`${feedbackText} <br><br>The correct answer was "${corrAns}".`);
-    console.log(feedbackText);
-  }
-}
-
-
-function btnHndlr_SubmitAnswer() {
-  $('form').on('submit', function (event) {
-      event.preventDefault();
-      let selected = $('input[name="poss-answers"]:checked');
-      let answer = $(selected).val();
-      let correctAnswer = `${ITEMBANK[currentQuestion].correctAnswer}`;
-      console.log(`Selected: ${selected}. Answer: ${answer}. CorrAnswer: ${correctAnswer}.`);
-
-      $(".current-image").attr({
-        src: ITEMBANK[currentQuestion].displayImg,
-        alt: ITEMBANK[currentQuestion].alt
-      });
-
-/**************
-      document.getElementById("myBtn").disabled = true;
- */
-
-      if (answer === correctAnswer) {
-        currentScore++;
-        provideFeedback("correct");
-      } else {
-        provideFeedback("incorrect", correctAnswer);
-      }
-
-      if (currentQuestion + 1 === totalQuestions) {
-        setActiveQuizPhase($('#quiz-complete'));
-      } else {
-        $('.btn-submit-answer').prop("disabled", true);
-        $('.advance-to-next').addClass("toggle__active");
-      }
-      
-
-    });
-}
-
-function btnHndlr_Next() {
-  $('#quiz-in-progress').on('click', `.btn-next`, event => {
-    console.log(`Next btn clicked.`);
-    event.preventDefault();
-    currentQuestion++;
-    updateProgress();
-    
-    console.log(`Next btn. Score now: ${currentScore}. QNum now: ${currentQuestion}.`);
-
-    $('.advance-to-next').removeClass("toggle__active");
-    $(".current-image").attr({
-        src: "",
-        alt: "",
-    });
-    $("fieldset").html(renderQuestion(currentQuestion));
-    $('.btn-submit-answer').prop("disabled", false);
-  });
-}
-
-
-function handleRestartQuiz() {
-  $('#quiz-complete').on('click', `#btn-quiz-restart`, event => {
-    console.log('`handleRestartQuiz` ran');
-    
-    resetQuizCounters();
-    setActiveQuizPhase($('#quiz-in-progress'));
-    
-  });
-}
-
-
 
 function renderQuestion(questionNum) {
     let regexNum2Replace = /@@num@@/gi;
@@ -154,29 +62,117 @@ function renderQuestion(questionNum) {
     return questionText + possAnswersHtml + btnSubmitAnswerHtml;
 }
 
-function quizIntro() {
-  $(".current-image").attr({
-    src: "images/Pong.jpg",
-    alt: "pong video game image"
+function provideFeedback(feedbackType, corrAns) {
+  let feedbackText = "";
+  let rnd = function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  };
+
+  if (feedbackType === "correct") {
+    $('.answer-feedback').addClass("correct");
+    $('.answer-feedback').removeClass("incorrect");
+    feedbackText = positiveFeedback[rnd(positiveFeedback.length)];
+    $('.answer-feedback').html(`<p>${feedbackText}</p>`);
+  } else {
+    $('.answer-feedback').addClass("incorrect");
+    $('.answer-feedback').removeClass("correct");
+    feedbackText = negativeFeedback[rnd(negativeFeedback.length)];
+    $('.answer-feedback').html(`<p>${feedbackText} <br><br>The correct answer was "${corrAns}".</p>`);
+  }
+}
+
+function presentSummary() {
+    $("[class^=col-]").css("display", "none");
+    setActiveQuizPhase($('#quiz-complete'));
+}
+
+function btnHndlr_BeginQuiz() {
+  $('#quiz-start').on('click', `.btn-begin-quiz`, event => {
+    event.preventDefault();
+    resetQuizCounters();
+    $(".current-image").attr({
+        src: "",
+        alt: "",
+    });
+    updateProgress();
+    $("fieldset").html(renderQuestion(currentQuestion));
+    $(".btn-submit-answer").toggleClass("toggle__active");
+    setActiveQuizPhase($('#quiz-in-progress'));
   });
-  $('.quiz-progress-indicator').text("");
-  $('.quiz-current-score').text("");
-   setActiveQuizPhase($('#quiz-start'));
+}
+
+function btnHndlr_SubmitAnswer() {
+  $('form').on('submit', function (event) {
+    event.preventDefault();
+    let selected = $('input[name="poss-answers"]:checked');
+    let answer = $(selected).val();
+    let correctAnswer = `${ITEMBANK[currentQuestion].correctAnswer}`;
+    
+    $(".btn-submit-answer").toggleClass("toggle__active");
+
+    $(".current-image").attr({
+      src: ITEMBANK[currentQuestion].displayImg,
+      alt: ITEMBANK[currentQuestion].alt
+    });
+
+    if (answer === correctAnswer) {
+      currentScore++;
+      updateProgress();
+      provideFeedback("correct");
+    } else {
+      provideFeedback("incorrect", correctAnswer);
+    }
+
+    $('.advance-to-next').addClass("toggle__active");
+    
+  });
+}
+
+function btnHndlr_Next() {
+  $('#quiz-in-progress').on('click', `.btn-next`, event => {
+    event.preventDefault();
+
+    if (currentQuestion + 1 === totalQuestions) {
+      presentSummary();
+    } else {
+      currentQuestion++;
+      updateProgress();
+      
+      $('.advance-to-next').removeClass("toggle__active");
+      $(".current-image").attr({
+          src: "",
+          alt: "",
+      });
+
+      $('.answer-feedback').empty();
+
+      $("fieldset").html(renderQuestion(currentQuestion));
+      $(".btn-submit-answer").toggleClass("toggle__active");
+    }
+  });
+}
+
+function btnHndlr_RestartQuiz() {
+  $('#quiz-complete').on('click', `.btn-quiz-restart`, event => {
+    event.preventDefault();
+
+    console.log("btnHndlr_RestartQuiz ran");
+    
+    resetQuizCounters();
+    $("[class^=col-]").css("display", "flex");
+    $('.answer-feedback').empty();
+    $('.advance-to-next').removeClass("toggle__active");
+    quizIntro();    
+  });
 }
 
 function launchQuiz() {
-  
-  console.log('Started.');
   quizIntro();
   btnHndlr_BeginQuiz();
   btnHndlr_SubmitAnswer();
   btnHndlr_Next();
- 
-  /*
-  handleRestartQuiz();
-  */
-
+  btnHndlr_RestartQuiz();
 }
 
-// when the page loads, call `handleShoppingList`
+// when the page loads, call `launchQuiz`
 $(launchQuiz);
