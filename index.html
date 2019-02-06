@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width">
     <title>Classic Arcade Game Quiz</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
 
@@ -18,11 +19,14 @@
 
       <div class="col-1">
           
-        <p class="quiz-progress-indicator">Question x of y</p>
+        <p class="quiz-progress-indicator"></p>
 
         <div class="quiz-dialog">
 
-          <div id="quiz-start" class="quiz-phase toggle__active"
+          <div id="quiz-start" class="quiz-phase toggle__active">
+          
+          <!-- <div class="narrow">JJJ</div>  -->
+
             <h2 role="banner">Test your knowledge of the Golden Age of Video Games!</h2>
           
             <button class="btn-begin-quiz" type="submit">Begin Quiz</button>
@@ -37,6 +41,7 @@
             
             <div class="answer-feedback">
             </div>
+            <p class="lower-score-display"></p>
             <div class="advance-to-next">
                <button class="btn-next" type="submit">NEXT</button>
             </div>
@@ -46,7 +51,7 @@
       </div>
         
       <div class="col-2">
-        <p class="quiz-current-score">Your score: n</p>
+        <p class="quiz-current-score"></p>
         <img class="current-image" src="" alt="" />
       </div>
              

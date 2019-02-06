@@ -10,7 +10,21 @@ main {
   display: flex;
   justify-content: center;
   margin-top: 15px;
-  border: 5px solid red;
+  /* border: 5px solid red; */
+}
+
+/*
+.narrow {
+  border: 5px solid gray;  
+  width: 320px;
+}
+*/
+
+h2 {
+  font-size: 14px;
+  font-family: 'Orbitron', sans-serif;
+  color: rgb(220, 231, 68);
+  
 }
 
 .quiz-phase {
@@ -28,7 +42,7 @@ main {
   flex-direction: column;
   flex-wrap: wrap;
   max-width: 450px;
-  border: 3px solid green;
+  /* border: 3px solid green; */
 }
 
 .quiz-progress-indicator {
@@ -36,11 +50,11 @@ main {
 }
 
 button {
-    padding: 20px;
+    padding: 15px;
     border: none;
     background-color: #A44B4B;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     display: block;
@@ -50,11 +64,7 @@ button {
 }
 
 .col-2 {
-  display: flex;
-  flex-direction: column;
-  max-width: 450px;
-  border: 3px solid magenta;
-  text-align: center;
+  display: none;
 }
 
 .quiz-current-score {
@@ -66,7 +76,7 @@ button {
   height: 405px;
   width: 225px; 
   object-fit: contain;
-  border: 3px solid pink;
+  /* border: 3px solid pink; */
 }
 
 .btn-submit-answer {
@@ -89,8 +99,7 @@ legend {
 
 .answer-feedback {
   margin-top: 15px;
-  border: 2px solid black;
-  width: 60%; 
+  border: 1px solid black;
   }
 
 .answer-feedback.incorrect {
@@ -103,4 +112,26 @@ legend {
 
 .toggle__active {
   display: block;
+}
+
+/*
+For any screen larger than 320px
+*/
+@media screen and (min-width: 320px) {
+
+  h2 {
+    font-size: 22px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .lower-score-display {
+    display: none;
+  }
+
+  .col-2 {
+    display: flex;
+    flex-direction: column;
+    max-width: 450px;
+    text-align: center;
+  }
 }

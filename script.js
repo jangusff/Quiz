@@ -16,9 +16,9 @@ const positiveFeedback = [
 ];
 
 const negativeFeedback = [
-  "Sorry. That is not the correct answer.",
-  "Nope.  Sorry.",
-  "No. Unfortunately, your answer was INCORRECT.",
+  "Sorry. That was not the correct answer.",
+  "Close, but not correct.",
+  "No. Unfortunately, your answer was incorrect.",
 ];
 
 function resetQuizCounters() {
@@ -29,8 +29,10 @@ function resetQuizCounters() {
 
 function updateProgress() {
   let qNumForDisplay = currentQuestion + 1;
-  $('.quiz-progress-indicator').text(`Question ${qNumForDisplay.toString()} of ${totalQuestions.toString()}`);
-  $('.quiz-current-score').text(`Your score: ${currentScore.toString()}`);
+  let currScoreMsg = `Your score: ${currentScore}`
+  $('.quiz-progress-indicator').text(`Question ${qNumForDisplay} of ${totalQuestions}`);
+  $('.quiz-current-score').text(currScoreMsg);
+  $('.lower-score-display').text(currScoreMsg);
 }
 
 function setActiveQuizPhase(targetPhase) {
