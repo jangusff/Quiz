@@ -21,6 +21,23 @@ const negativeFeedback = [
   "No. Unfortunately, your answer was incorrect.",
 ];
 
+function randomizeQuestionOrder() {
+  Array.prototype.shuffle = function() {
+      var input = this;
+      
+      for (var i = input.length-1; i >=0; i--) {
+      
+          var randomIndex = Math.floor(Math.random()*(i+1)); 
+          var itemAtIndex = input[randomIndex]; 
+          
+          input[randomIndex] = input[i]; 
+          input[i] = itemAtIndex;
+      }
+      return input;
+  }
+  ITEMBANK.shuffle();
+}
+
 function resetQuizCounters() {
   totalQuestions = ITEMBANK.length;
   currentQuestion = 0;
@@ -30,7 +47,7 @@ function resetQuizCounters() {
 function updateProgress() {
   let qNumForDisplay = currentQuestion + 1;
   let currScoreMsg = `Your score: ${currentScore}`
-  $('.quiz-progress-indicator').text(`Question ${qNumForDisplay} of ${totalQuestions}`);
+  $('.quiz-progress-indicator').text(`Question ${qNumForDisplay} of ${totalQuestions}...`);
   $('.quiz-current-score').text(currScoreMsg);
   $('.lower-score-display').text(currScoreMsg);
 }
@@ -169,6 +186,7 @@ function btnHndlr_RestartQuiz() {
 }
 
 function launchQuiz() {
+  randomizeQuestionOrder();
   quizIntro();
   btnHndlr_BeginQuiz();
   btnHndlr_SubmitAnswer();

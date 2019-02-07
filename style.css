@@ -23,7 +23,7 @@ main {
 h2 {
   font-size: 14px;
   font-family: 'Orbitron', sans-serif;
-  color: rgb(220, 231, 68);
+  color: #1c2833;
   
 }
 
@@ -37,16 +37,17 @@ h2 {
   display: none;
 }
 
+.col-1, .col-2 {
+   background-color: #da9947;
+   padding: 25px;
+}
+
 .col-1 {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   max-width: 450px;
   /* border: 3px solid green; */
-}
-
-.quiz-progress-indicator {
-  border: 2px solid gold;
 }
 
 button {
@@ -65,6 +66,10 @@ button {
 
 .col-2 {
   display: none;
+}
+
+.scoreboard {
+  font-weight: bold;
 }
 
 .quiz-current-score {
@@ -100,14 +105,15 @@ legend {
 .answer-feedback {
   margin-top: 15px;
   border: 1px solid black;
+  border-radius: 8px;
   }
 
 .answer-feedback.incorrect {
-  background-color: red;
+  background-color:#f07373;
 }
 
 .answer-feedback.correct {
-  background-color: green;
+  background-color: #65fc5e;
 }
 
 .toggle__active {
@@ -121,7 +127,6 @@ For any screen larger than 320px
 
   h2 {
     font-size: 22px;
-    font-family: 'Orbitron', sans-serif;
   }
 
   .lower-score-display {
