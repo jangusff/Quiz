@@ -4,6 +4,7 @@
 
 body {
   padding: 25px;
+  background-color: #3b2c2c;
 }
 
 main {
@@ -76,12 +77,19 @@ button {
   border: 2px solid black;
 }
 
+fieldset {
+    border: 1px solid #383838;
+    background-color: #f1d5ae;
+    border-radius: 4px;
+    margin: 0 2px;
+    padding: .35em .625em .75em;
+}
+
 .current-image {
   padding: 15px;
   height: 405px;
   width: 225px; 
   object-fit: contain;
-  /* border: 3px solid pink; */
 }
 
 .btn-submit-answer {
@@ -105,8 +113,12 @@ legend {
 .answer-feedback {
   margin-top: 15px;
   border: 1px solid black;
-  border-radius: 8px;
-  }
+  border-radius: 4px;
+}
+
+.answer-feedback > p {
+  padding: 10px;
+}
 
 .answer-feedback.incorrect {
   background-color:#f07373;
@@ -114,6 +126,15 @@ legend {
 
 .answer-feedback.correct {
   background-color: #65fc5e;
+}
+
+.cor-answr-text {
+  font-weight: bold;
+  color: #2D0611;
+}
+
+#quiz-complete {
+  color: #fdfce2;
 }
 
 .toggle__active {

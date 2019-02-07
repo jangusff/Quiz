@@ -21,6 +21,12 @@ const negativeFeedback = [
   "No. Unfortunately, your answer was incorrect.",
 ];
 
+const closingMessages = {
+  subpar: "This was a tough quiz.  Thanks for taking part!",
+  ok: "Not bad.  You know your video games!",
+  good: "You did excellent!  Well done!",
+};
+
 function randomizeQuestionOrder() {
   Array.prototype.shuffle = function() {
       var input = this;
@@ -39,7 +45,8 @@ function randomizeQuestionOrder() {
 }
 
 function resetQuizCounters() {
-  totalQuestions = ITEMBANK.length;
+  totalQuestions = 5;
+  /* totalQuestions = ITEMBANK.length; */
   currentQuestion = 0;
   currentScore = 0;
 }
@@ -63,8 +70,7 @@ function quizIntro() {
     alt: "pong video game image"
   });
   $('.quiz-progress-indicator').text("");
-  $('.quiz-current-score').text("");
-   setActiveQuizPhase($('#quiz-start'));
+  setActiveQuizPhase($('#quiz-start'));
 }
 
 function renderQuestion(questionNum) {
@@ -96,13 +102,25 @@ function provideFeedback(feedbackType, corrAns) {
     $('.answer-feedback').addClass("incorrect");
     $('.answer-feedback').removeClass("correct");
     feedbackText = negativeFeedback[rnd(negativeFeedback.length)];
-    $('.answer-feedback').html(`<p>${feedbackText} <br><br>The correct answer was "${corrAns}".</p>`);
+    $('.answer-feedback').html(`<p>${feedbackText} <br><br>The correct answer was <span class="cor-answr-text">${corrAns}</span>.</p>`);
   }
 }
 
 function presentSummary() {
-    $("[class^=col-]").css("display", "none");
-    setActiveQuizPhase($('#quiz-complete'));
+  const finalScoreStr = `You scored ${currentScore} out of ${totalQuestions}.`;
+  let closingMsg;
+
+  if (currentScore > (totalQuestions * 0.66)) {
+    closingMsg = closingMessages.good;
+  } else if (currentScore > (totalQuestions * 0.33)) {
+    closingMsg = closingMessages.ok;
+  } else {
+    closingMsg = closingMessages.subpar;
+  }
+
+  $('.closing-message').html(`${finalScoreStr}<br>${closingMsg}`);
+  $("[class^=col-]").css("display", "none");
+  setActiveQuizPhase($('#quiz-complete'));
 }
 
 function btnHndlr_BeginQuiz() {
@@ -174,12 +192,10 @@ function btnHndlr_Next() {
 function btnHndlr_RestartQuiz() {
   $('#quiz-complete').on('click', `.btn-quiz-restart`, event => {
     event.preventDefault();
-
-    console.log("btnHndlr_RestartQuiz ran");
-    
     resetQuizCounters();
     $("[class^=col-]").css("display", "flex");
     $('.answer-feedback').empty();
+    $('.quiz-current-score').empty();
     $('.advance-to-next').removeClass("toggle__active");
     quizIntro();    
   });
