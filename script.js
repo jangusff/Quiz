@@ -51,7 +51,14 @@ function quizIntro() {
   });
   $('.quiz-progress-indicator').text("");
   $('.quiz-current-score').text("");
+  $('.scoreboard').removeClass("toggle__active");
   setActiveQuizPhase($('#quiz-start'));
+}
+
+function resetQuizCounters() {
+  totalQuestions = ITEMBANK.length;
+  currentQuestion = 0;
+  currentScore = 0;
 }
 
 function updateProgress() {
@@ -100,13 +107,6 @@ function provideFeedback(feedbackType, corrAns) {
   }
 }
 
-function resetQuizCounters() {
-  totalQuestions = 5;
-  /* totalQuestions = ITEMBANK.length; */
-  currentQuestion = 0;
-  currentScore = 0;
-}
-
 function presentSummary() {
   const finalScoreStr = `You scored ${currentScore} out of ${totalQuestions}.`;
   let closingMsg;
@@ -120,9 +120,7 @@ function presentSummary() {
   }
 
   $('.closing-message').html(`${finalScoreStr}<br><br>${closingMsg}`);
-  /* $("[class^=col-]").css("display", "none"); */
-  /* $(".col-2").css("display", "none"); */
-  $('.quiz-progress-indicator').text("");
+  $('.scoreboard').removeClass("toggle__active");
   $(".current-image").attr({
     src: "images/Joystick.jpg",
     alt: "joy stick image"
@@ -141,6 +139,8 @@ function btnHndlr_BeginQuiz() {
     updateProgress();
     $("fieldset").html(renderQuestion(currentQuestion));
     $(".btn-submit-answer").toggleClass("toggle__active");
+    $('.scoreboard').addClass("toggle__active");
+    $('.answer-feedback').removeClass("toggle__active");
     setActiveQuizPhase($('#quiz-in-progress'));
   });
 }
@@ -158,6 +158,8 @@ function btnHndlr_SubmitAnswer() {
       src: ITEMBANK[currentQuestion].displayImg,
       alt: ITEMBANK[currentQuestion].alt
     });
+
+    $('.answer-feedback').addClass("toggle__active");
 
     if (answer === correctAnswer) {
       currentScore++;
@@ -189,7 +191,7 @@ function btnHndlr_Next() {
       });
 
       $('.answer-feedback').empty();
-
+      $('.answer-feedback').removeClass("toggle__active");
       $("fieldset").html(renderQuestion(currentQuestion));
       $(".btn-submit-answer").toggleClass("toggle__active");
     }
@@ -200,10 +202,7 @@ function btnHndlr_RestartQuiz() {
   $('#quiz-complete').on('click', `.btn-quiz-restart`, event => {
     event.preventDefault();
     resetQuizCounters();
-    /* $("[class^=col-]").css("display", "flex"); */
-    /* $(".col-1").css("display", "flex"); */
     $('.answer-feedback').empty();
-    
     $('.advance-to-next').removeClass("toggle__active");
     quizIntro();    
   });
