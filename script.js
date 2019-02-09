@@ -44,11 +44,14 @@ function randomizeQuestionOrder() {
   ITEMBANK.shuffle();
 }
 
-function resetQuizCounters() {
-  totalQuestions = 5;
-  /* totalQuestions = ITEMBANK.length; */
-  currentQuestion = 0;
-  currentScore = 0;
+function quizIntro() {
+  $(".current-image").attr({
+    src: "images/Pong.jpg",
+    alt: "pong video game image"
+  });
+  $('.quiz-progress-indicator').text("");
+  $('.quiz-current-score').text("");
+  setActiveQuizPhase($('#quiz-start'));
 }
 
 function updateProgress() {
@@ -62,15 +65,6 @@ function updateProgress() {
 function setActiveQuizPhase(targetPhase) {
   $('.quiz-phase').removeClass("toggle__active");
   targetPhase.addClass("toggle__active");
-}
-
-function quizIntro() {
-  $(".current-image").attr({
-    src: "images/Pong.jpg",
-    alt: "pong video game image"
-  });
-  $('.quiz-progress-indicator').text("");
-  setActiveQuizPhase($('#quiz-start'));
 }
 
 function renderQuestion(questionNum) {
@@ -106,6 +100,13 @@ function provideFeedback(feedbackType, corrAns) {
   }
 }
 
+function resetQuizCounters() {
+  totalQuestions = 5;
+  /* totalQuestions = ITEMBANK.length; */
+  currentQuestion = 0;
+  currentScore = 0;
+}
+
 function presentSummary() {
   const finalScoreStr = `You scored ${currentScore} out of ${totalQuestions}.`;
   let closingMsg;
@@ -118,8 +119,14 @@ function presentSummary() {
     closingMsg = closingMessages.subpar;
   }
 
-  $('.closing-message').html(`${finalScoreStr}<br>${closingMsg}`);
-  $("[class^=col-]").css("display", "none");
+  $('.closing-message').html(`${finalScoreStr}<br><br>${closingMsg}`);
+  /* $("[class^=col-]").css("display", "none"); */
+  /* $(".col-2").css("display", "none"); */
+  $('.quiz-progress-indicator').text("");
+  $(".current-image").attr({
+    src: "images/Joystick.jpg",
+    alt: "joy stick image"
+  });
   setActiveQuizPhase($('#quiz-complete'));
 }
 
@@ -193,9 +200,10 @@ function btnHndlr_RestartQuiz() {
   $('#quiz-complete').on('click', `.btn-quiz-restart`, event => {
     event.preventDefault();
     resetQuizCounters();
-    $("[class^=col-]").css("display", "flex");
+    /* $("[class^=col-]").css("display", "flex"); */
+    /* $(".col-1").css("display", "flex"); */
     $('.answer-feedback').empty();
-    $('.quiz-current-score').empty();
+    
     $('.advance-to-next').removeClass("toggle__active");
     quizIntro();    
   });

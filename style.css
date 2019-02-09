@@ -14,13 +14,6 @@ main {
   /* border: 5px solid red; */
 }
 
-/*
-.narrow {
-  border: 5px solid gray;  
-  width: 320px;
-}
-*/
-
 h2 {
   font-size: 14px;
   font-family: 'Orbitron', sans-serif;
@@ -51,6 +44,10 @@ h2 {
   /* border: 3px solid green; */
 }
 
+.col-2 {
+  display: none;
+}
+
 button {
     padding: 15px;
     border: none;
@@ -65,16 +62,8 @@ button {
     margin-right: auto;
 }
 
-.col-2 {
-  display: none;
-}
-
 .scoreboard {
   font-weight: bold;
-}
-
-.quiz-current-score {
-  border: 2px solid black;
 }
 
 fieldset {
@@ -160,4 +149,9 @@ For any screen larger than 320px
     max-width: 450px;
     text-align: center;
   }
+
+  .quiz-current-score {
+    border: 2px solid black;
+  }
+
 }
