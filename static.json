@@ -1,3 +1,10 @@
 {
     "encoding": "US-ASCII"
+
+    "routes": {
+        "/*.html": "index.html",
+    }
+
+    "canonical_host": "example.com"
+
 }
