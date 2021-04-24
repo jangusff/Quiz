@@ -3,8 +3,6 @@
 
     "routes": {
         "/*.html": "index.html"
-    },
-
-    "canonical_host": "lakequake.com"
+    }
 
 }
